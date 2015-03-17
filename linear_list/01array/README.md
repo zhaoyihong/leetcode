@@ -355,3 +355,210 @@ python:
 	                    lo = lo+1
 	
 	            return False
+
+
+
+# 4 Median of Two Sorted Arrays  #
+
+There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+获取两个排序数组最中间的元素
+
+注意,如果所有元素个数为偶数,返回最中间的两个元素的平均值
+
+
+两个数组轮询的解法
+
+		
+		
+	class Solution {
+	public:
+	    double findMedianSortedArrays(int A[], int m, int B[], int n) {
+	  
+	        if(m == 0 && n == 0)
+	        {
+	            return -1.0;
+	        }
+	
+	        int mid = (m+n)/2;
+	        int index_a = 0,index_b = 0,index_all = 0;
+	        int num_bf = 0; //上一个数值,m+n为偶数时要用到
+	        int num_now = 0; 
+	
+	        while(index_all < m+n)
+	        {
+	            while( index_b == n ||( index_a < m  && A[index_a] <= B[index_b]))
+	            {
+	                if(index_all == mid)
+	                {
+	                    num_now =  A[index_a];
+	                    goto END;    
+	                }
+	
+	                num_bf = A[index_a];
+	                index_all ++;
+	                index_a ++;
+	            }
+	
+	            while( index_a == m  || ( index_b < n && B[index_b] <= A[index_a]))
+	            {
+	                if(index_all == mid)
+	                {
+	                    num_now = B[index_b];
+	                    goto END;
+	                }
+	
+	                num_bf = B[index_b];
+	                index_all ++;
+	                index_b ++;
+	            }
+	        }
+	
+	        END:
+	        if( (m+n) & 0x1 )
+	        {
+	            return num_now;
+	        }
+	        else
+	        {
+	            return (num_now + num_bf)*1.0/2;
+	        }
+	
+	    }
+	};
+
+
+利用找到k大的值的解法:
+
+有没有更好的方案呢？我们可以考虑从 k 入手。如果我们每次都能够删除一个一定在第 k 大元素之前的元素，那么我们需要进行 k 次。
+
+但是如果每次我们都删除一半呢？由于 A 和 B 都是有序的，我们应该充分利用这里面的信息，类似于二分查找，也是充分利用了“有序”。
+
+假设 A 和 B 的元素个数都大于 k/2，我们将 A 的第 k/2 个元素（即 A[k/2-1]）和 B 的第 k/2个元素（即 B[k/2-1]）进行比较，有以下三种情况（为了简化这里先假设k 为偶数，所得到的结论对于k 是奇数也是成立的）：
+
+• A[k/2-1] == B[k/2-1]
+
+• A[k/2-1] > B[k/2-1]
+
+• A[k/2-1] < B[k/2-1]
+
+如果 A[k/2-1] < B[k/2-1]，意味着 A[0] 到 A[k/2-1] 的肯定在 A U B 的 top k 元素的范围内，换句话说，A[k/2-1]不可能大于 A U B 的第k 大元素。
+
+	反证法:
+		如果 A[k/2-1] 大于第k个元素,假设它是第k+1个元素
+		又因为B[k/2-1]大于A[k/2-1],假设它是k+2个元素
+		那么A[k/2-1]和B[k/2-1]前面至少因为该有k个元素,但是它们前面只有(m+n)/2个元素
+
+
+因此，我们可以放心的删除 A 数组的这 k/2 个元素。同理，当 A[k/2-1] > B[k/2-1] 时，可以删除 B数组的 k/2 个元素。
+
+当 A[k/2-1] == B[k/2-1] 时，说明找到了第 k 大的元素，直接返回 A[k/2-1] 或 B[k/2-1]即可。
+
+因此，我们可以写一个递归函数。那么函数什么时候应该终止呢？
+
+• 当 A 或 B是空时，直接返回 B[k-1]或 A[k-1]；
+
+• 当 k=1是，返回 min(A[0], B[0])；
+
+• 当 A[k/2-1] == B[k/2-1] 时，返回 A[k/2-1] 或 B[k/2-1]
+
+
+
+	
+	
+	class Solution {
+	public:
+	    double findMedianSortedArrays(int A[], int m, int B[], int n) {
+	        
+	        int total = m+n;
+	        if( total & 0x1 )
+	        {
+	            return find_kth(A,m,B,n,total/2+1);
+	        }
+	        else
+	        {
+	            return ( find_kth(A,m,B,n,total/2) + find_kth(A,m,B,n,total/2+1) )/2.0;
+	        }
+	    }
+	
+	private:
+	
+	    //获取两个数组中第k大的数值
+	    int find_kth(int A[],int m,int B[],int n,int k)
+	    {
+	        //let m<n
+	
+	        if(m>n)
+	        {
+	            return find_kth(B,n,A,m,k);
+	        }
+	
+	        if(m == 0)
+	        {
+	            return B[k-1];
+	        }
+	
+	        if(k == 1)
+	        {
+	            return min(A[0],B[0]);
+	        }
+	
+	        int ia = min(k/2 , m) , ib = k - ia;
+	
+	        if(A[ia-1] < B[ib-1])
+	        {
+	            return find_kth(A+ia,m-ia,B,n,k-ia);
+	        }
+	        else if(A[ia-1] > B[ib-1])
+	        {
+	            return find_kth(A,m,B+ib,n-ib,k-ib);
+	        }
+	        else
+	        {
+	            return A[ia-1];
+	        }
+	
+	    }
+	
+	};
+
+python
+	
+	
+	class Solution:
+	    # @return a float
+	    def findMedianSortedArrays(self, A, B):
+	        len_a = len(A)
+	        len_b = len(B)
+	        total = len_a + len_b
+	        if total & 0x1:
+	            return self.__find_kth(A,B,total/2+1)
+	        else:
+	            return (self.__find_kth(A,B,total/2) + self.__find_kth(A,B,total/2+1))/2.0
+	
+	    
+	    def __find_kth(self,A,B,k):
+	        len_a = len(A)
+	        len_b = len(B)
+	
+	        #let len_a < len_b
+	        if len_a > len_b:
+	            return self.__find_kth(B,A,k)
+	
+	        if len_a == 0:
+	            return B[k-1]
+	
+	        if k == 1:
+	            return min(A[0],B[0])
+	
+	        ia = min(k/2,len_a)
+	        ib = k - ia
+	
+	        if A[ia-1] < B[ib-1]:
+	            return self.__find_kth(A[ia:],B,k-ia)
+	        elif A[ia-1] > B[ib-1]:
+	            return self.__find_kth(A,B[ib:],k-ib)
+	        else:
+	            return A[ia-1]
+
+ 
