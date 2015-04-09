@@ -1,0 +1,40 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+LCS	main.cpp	/^    LCS(string& _s1,string& _s2):s1(_s1),s2(_s2)$/;"	f	language:C++	class:LCS	access:public	signature:(string& _s1,string& _s2)
+LCS	main.cpp	/^class LCS$/;"	c	language:C++	file:
+LCS::LCS	main.cpp	/^    LCS(string& _s1,string& _s2):s1(_s1),s2(_s2)$/;"	f	language:C++	class:LCS	access:public	signature:(string& _s1,string& _s2)
+LCS::LEFT	main.cpp	/^    enum{LEFT_TOP=1,LEFT=2,TOP=3,LEFT_AND_TOP=4};$/;"	e	language:C++	enum:LCS::__anon1	file:
+LCS::LEFT_AND_TOP	main.cpp	/^    enum{LEFT_TOP=1,LEFT=2,TOP=3,LEFT_AND_TOP=4};$/;"	e	language:C++	enum:LCS::__anon1	file:
+LCS::LEFT_TOP	main.cpp	/^    enum{LEFT_TOP=1,LEFT=2,TOP=3,LEFT_AND_TOP=4};$/;"	e	language:C++	enum:LCS::__anon1	file:
+LCS::TOP	main.cpp	/^    enum{LEFT_TOP=1,LEFT=2,TOP=3,LEFT_AND_TOP=4};$/;"	e	language:C++	enum:LCS::__anon1	file:
+LCS::_get_all_lcs	main.cpp	/^    void _get_all_lcs()$/;"	f	language:C++	class:LCS	file:	access:private	signature:()
+LCS::_get_arrays	main.cpp	/^    void _get_arrays()$/;"	f	language:C++	class:LCS	file:	access:private	signature:()
+LCS::all_lcs	main.cpp	/^    vector<string> all_lcs;$/;"	m	language:C++	class:LCS	file:	access:private
+LCS::array_cols	main.cpp	/^    int array_cols; \/\/数组列数$/;"	m	language:C++	class:LCS	file:	access:private
+LCS::array_rows	main.cpp	/^    int array_rows; \/\/数组行数$/;"	m	language:C++	class:LCS	file:	access:private
+LCS::direction_arry	main.cpp	/^    vector<vector<int>> direction_arry; \/\/方向数组$/;"	m	language:C++	class:LCS	file:	access:private
+LCS::get_longest_length	main.cpp	/^    int get_longest_length()$/;"	f	language:C++	class:LCS	access:public	signature:()
+LCS::length_array	main.cpp	/^    vector<vector<int>> length_array; \/\/长度数组$/;"	m	language:C++	class:LCS	file:	access:private
+LCS::print_arrays	main.cpp	/^    void print_arrays()$/;"	f	language:C++	class:LCS	access:public	signature:()
+LCS::s1	main.cpp	/^    string s1,s2; \/\/字符串$/;"	m	language:C++	class:LCS	file:	access:private
+LCS::s2	main.cpp	/^    string s1,s2; \/\/字符串$/;"	m	language:C++	class:LCS	file:	access:private
+LEFT	main.cpp	/^    enum{LEFT_TOP=1,LEFT=2,TOP=3,LEFT_AND_TOP=4};$/;"	e	language:C++	enum:LCS::__anon1	file:
+LEFT_AND_TOP	main.cpp	/^    enum{LEFT_TOP=1,LEFT=2,TOP=3,LEFT_AND_TOP=4};$/;"	e	language:C++	enum:LCS::__anon1	file:
+LEFT_TOP	main.cpp	/^    enum{LEFT_TOP=1,LEFT=2,TOP=3,LEFT_AND_TOP=4};$/;"	e	language:C++	enum:LCS::__anon1	file:
+TOP	main.cpp	/^    enum{LEFT_TOP=1,LEFT=2,TOP=3,LEFT_AND_TOP=4};$/;"	e	language:C++	enum:LCS::__anon1	file:
+_get_all_lcs	main.cpp	/^    void _get_all_lcs()$/;"	f	language:C++	class:LCS	file:	access:private	signature:()
+_get_arrays	main.cpp	/^    void _get_arrays()$/;"	f	language:C++	class:LCS	file:	access:private	signature:()
+all_lcs	main.cpp	/^    vector<string> all_lcs;$/;"	m	language:C++	class:LCS	file:	access:private
+array_cols	main.cpp	/^    int array_cols; \/\/数组列数$/;"	m	language:C++	class:LCS	file:	access:private
+array_rows	main.cpp	/^    int array_rows; \/\/数组行数$/;"	m	language:C++	class:LCS	file:	access:private
+direction_arry	main.cpp	/^    vector<vector<int>> direction_arry; \/\/方向数组$/;"	m	language:C++	class:LCS	file:	access:private
+get_longest_length	main.cpp	/^    int get_longest_length()$/;"	f	language:C++	class:LCS	access:public	signature:()
+length_array	main.cpp	/^    vector<vector<int>> length_array; \/\/长度数组$/;"	m	language:C++	class:LCS	file:	access:private
+main	main.cpp	/^int main()$/;"	f	language:C++	signature:()
+print_arrays	main.cpp	/^    void print_arrays()$/;"	f	language:C++	class:LCS	access:public	signature:()
+s1	main.cpp	/^    string s1,s2; \/\/字符串$/;"	m	language:C++	class:LCS	file:	access:private
+s2	main.cpp	/^    string s1,s2; \/\/字符串$/;"	m	language:C++	class:LCS	file:	access:private
