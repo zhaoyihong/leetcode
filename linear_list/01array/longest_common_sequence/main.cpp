@@ -8,9 +8,6 @@
 如 acdfg,adfc最长公共子序列是adf,不需要连续
 一个序列S任意删除若干个字符得到新序列T，则T叫做S的子序列；
 
-
-
-
 非leetcode 
 
 ************************************************************************/
@@ -33,11 +30,10 @@ public:
         vector<int> zero(array_cols,0);
         length_array.assign(array_rows,zero);
         direction_arry.assign(array_rows,zero);
-        
         _get_arrays();
     }
     
-    int get_longest_length()
+    int get_lcs_len()
     {
        return length_array[array_rows-1][array_cols-1]; 
     }
@@ -68,7 +64,43 @@ public:
         }
     }
 
+    /**
+     * 获取一个最长子序列
+     * x是输出参数
+     */
+    void get_one_lcs(string &x)
+    {
+        vector<char> vc;
+        _get_one_lcs(array_rows-1,array_cols-1,vc);
+        x.assign(vc.rbegin(),vc.rend());
+    }
 
+private:
+    
+    //获取一个最长子序列,私有函数,供get_one_lcs调用
+    void _get_one_lcs(int i,int j,vector<char>& vc)
+    {
+        if(i==0 || j==0) return;
+
+        if(direction_arry[i][j] == LEFT_TOP)
+        {
+
+            vc.push_back(s1[i-1]);
+            _get_one_lcs(i-1,j-1,vc);
+        }
+        else if(direction_arry[i][j] == TOP)
+        {
+            _get_one_lcs(i-1,j,vc);
+        }
+        else if(direction_arry[i][j] == LEFT)
+        {
+            _get_one_lcs(i,j-1,vc);
+        }
+        else  //TOP_OR_LEFT
+        {
+            _get_one_lcs(i,j-1,vc);
+        }
+    }
 
 
 private:
@@ -95,42 +127,13 @@ private:
                     length_array[i][j] = length_array[i][j-1];
                     direction_arry[i][j] = LEFT;
                 }
-                else
+                else if(length_array[i-1][j] == length_array[i][j-1])
                 {
                     length_array[i][j] = length_array[i][j-1];
                     direction_arry[i][j] = LEFT_OR_TOP; 
                 }
             }
         }
-
-        _get_all_lcs();
-    }
-
-    //获取所有的lcs解 .暂时只求了一个
-    void _get_all_lcs()
-    {
-        int i = array_rows-1;
-        int j = array_cols-1;
-        while(i>=1 && j>=1)
-        {
-            switch(direction_arry[i][j])
-            {
-                case LEFT_TOP:
-                    cout << s1[i] ;
-                    i--;
-                    j--;
-                    break;
-                case TOP:
-                    i--;
-                    break;
-                case LEFT:
-                    j--;
-                    break;
-                default:    
-                    return;
-            }
-        }
-        cout << endl;
     }
 
     string s1,s2; //字符串
@@ -139,7 +142,7 @@ private:
     int array_rows; //数组行数
     int array_cols; //数组列数
 
-    enum{INIT=0,LEFT_TOP=1,LEFT=2,TOP=3,LEFT_OR_TOP=3};
+    enum{INIT=0,LEFT_TOP=1,LEFT=2,TOP=3,LEFT_OR_TOP=4};
 
     vector<string> all_lcs;
     
@@ -148,14 +151,12 @@ private:
 
 int main()
 {
-    string s1="bedf",s2="abdefxx";
+    string s1="113121",s2="211211";
 
     LCS lcs(s1,s2);
 
-    lcs.print_arrays();
-
-    
-    cout << lcs.get_longest_length() << endl;
-
-    
+    cout << lcs.get_lcs_len() << endl;
+    string str;
+    lcs.get_one_lcs(str);
+    cout << str << endl;
 }
